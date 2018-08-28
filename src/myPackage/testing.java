@@ -3,6 +3,7 @@ package myPackage;
 import java.applet.*;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class testing extends Applet {
@@ -28,21 +29,10 @@ public class testing extends Applet {
 	
 	
 	public void init() {
-		System.out.print(BigInteger.valueOf(6).remainder(BigInteger.valueOf(3)));
-		//System.out.println(Methods.findFactors(BigInteger.valueOf(6)));
+	
+		System.out.println(Arrays.toString(Methods.findFactors(BigInteger.valueOf(2345678))));
 		
-		for (int i = 0; i < Methods.findFactors(BigInteger.valueOf(6)).length; i++) {
-			System.out.println(Methods.findFactors(BigInteger.valueOf(6))[i]);
-		}
+		//System.out.println(Methods.findE(BigInteger.valueOf(6), BigInteger.valueOf(14)));
 		
-		/*for (BigInteger i = BigInteger.valueOf(2); i.add(BigInteger.ONE).compareTo(BigInteger.valueOf(6)) == -1; i.add(BigInteger.ONE)) {
-			System.out.println(i);
-			System.out.println(i.add(BigInteger.ONE).compareTo(BigInteger.valueOf(6)) == -1);
-			i.add(BigInteger.ONE);
-		}*/
-		
-		
-		//for (BigInteger i = BigInteger.valueOf(2); i.subtract(BigInteger.ONE).compareTo(BigInteger.valueOf(6)) == -1; i = i.add(BigInteger.ONE)) {
-
 	}
 }

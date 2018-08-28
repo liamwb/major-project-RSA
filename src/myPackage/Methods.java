@@ -29,9 +29,8 @@ public class Methods {
 	public static BigInteger[] findFactors (BigInteger number) {
 		List<BigInteger> factors = new ArrayList<BigInteger>(); //A list so that factors can be easily appended as they are confirmed
 
-		for (BigInteger i = BigInteger.valueOf(2); i.subtract(BigInteger.ONE).compareTo(BigInteger.valueOf(6)) == -1; i = i.add(BigInteger.ONE)) {
+		for (BigInteger i = BigInteger.valueOf(2); i.subtract(BigInteger.ONE).compareTo(number) == -1; i = i.add(BigInteger.ONE)) {
 			//this is the same as for (i = 2; i + 1 < number; i++), but using BigInteger because these numbers may get very large
-				
 				if (number.remainder(i).equals(BigInteger.valueOf(0))) {
 					factors.add(i);
 					i.add(BigInteger.ONE);
