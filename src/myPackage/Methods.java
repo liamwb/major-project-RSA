@@ -1,10 +1,11 @@
 package myPackage;
 
 import java.math.BigInteger;
+import java.lang.reflect.Array;
 import java.math.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 public class Methods {
 	
 	public static BigInteger encrypt(BigInteger message, BigInteger E, BigInteger N) {
@@ -46,7 +47,7 @@ public class Methods {
 	
 	public static BigInteger findE(BigInteger L, BigInteger N) {
 		boolean found = false; BigInteger T = BigInteger.valueOf(2); //since the while loop starts with T++, we will not test 1 as a factor
-		
+		BigInteger[] Tfactors; boolean testFailed = false;
 /*The rule for E is that E is coprime with L & N (i.e. E, L, and N share no common factors (except 1)).
  * to find a suitable E, this method will, starting at 1, take some test number, T, and find its factors. Then,
  * for each factor of T, it will check if T % N or L ever returns 0, and if it does, then that T is not a suitable
@@ -56,38 +57,40 @@ public class Methods {
  * Additionally, 1 < E < L
  */
 		while (!found) {
-			if (T.equals(L)) return BigInteger.valueOf(-1); //T is less than L
+			if (T.equals(L)) return BigInteger.valueOf(-1); //T must be less than L
+			Tfactors = findFactors(T);
+			System.out.println(Arrays.toString(Tfactors));
 			
-			BigInteger[] Tfactors = findFactors(T); boolean hasCommonFactor = false;
-			
-			for (int i = 0; i < Tfactors.length; i++) {
-				if (Tfactors[i].mod(L).equals(BigInteger.ZERO)) {
-					hasCommonFactor = true;
-					i = Tfactors.length;
-					System.out.println(i + " is a factor of " + T + ", and goes into" + L);
+			for (int i = 0; i < Tfactors.length; i ++) {
+				
+				if (N.remainder(Tfactors[i]).equals(BigInteger.ZERO)) {
+					//this is if (N % i == 0)
+					System.out.println(N + " % " + Tfactors[i] + " equals zero");
+					testFailed = true;
+					break;
 				}
-				if (Tfactors[i].mod(N).equals(BigInteger.ZERO)) {
-					hasCommonFactor = true;
-					i = Tfactors.length;
-					System.out.println(i + " is a factor of " + N + ", and goes into" + L);
-				}
-				//ie if any factor of T goes into L or N, then T is not a suitable candidate for E,
-				//and so the for loop is exited and T is incremented by 1
 			}
-			if (!hasCommonFactor) {
-				found = true;
+			if (!testFailed) {
+				//if there are no common factors with N
+				for (int i = 0; i < Tfactors.length; i ++) {
+					//the same for loop as before; to iterate through the array of factors
+					if (L.remainder(Tfactors[i]).equals(BigInteger.ZERO)) {
+						System.out.println(L + " % " + Tfactors[i] + " equals zero");
+						testFailed = true;
+						break;
+					}			
+				}
+			}
+			
+			if (!testFailed) {
+				System.out.println("test passed for " + T);
 				break;
 			}
-			T.add(BigInteger.ONE); //T++
-			/*while (!testFailed) {
-				if (Tfactors[i].mod(L).equals(BigInteger.ZERO)) {
-					i++; testFailed = true;
-				}
-				if (Tfactors[i].mod(N).equals(BigInteger.ZERO)) {
-					i++; testFailed = true;
-				}
-			found = true;
-			}*/	
+			T = T.add(BigInteger.ONE); 
+			System.out.println("T incremented to " +T);
+			testFailed = false;
+			
+			
 		}
 		return T;
 	}

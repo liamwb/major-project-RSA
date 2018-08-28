@@ -30,9 +30,12 @@ public class testing extends Applet {
 	
 	public void init() {
 	
-		System.out.println(Arrays.toString(Methods.findFactors(BigInteger.valueOf(2345678))));
+		//System.out.println((BigInteger.valueOf(14).remainder(BigInteger.valueOf(2))).equals(BigInteger.ZERO));
 		
-		//System.out.println(Methods.findE(BigInteger.valueOf(6), BigInteger.valueOf(14)));
+		//System.out.println(Arrays.toString(Methods.findFactors(BigInteger.valueOf(110880))));
 		
+		System.out.println("returns " + Methods.findE(BigInteger.valueOf(6), BigInteger.valueOf(14)));
+		
+		//System.out.println(BigInteger.ONE.add(BigInteger.ONE));
 	}
 }
