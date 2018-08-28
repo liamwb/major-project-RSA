@@ -29,7 +29,7 @@ public class Methods {
 	public static BigInteger[] findFactors (BigInteger number) {
 		List<BigInteger> factors = new ArrayList<BigInteger>(); //A list so that factors can be easily appended as they are confirmed
 		
-		for (BigInteger i = BigInteger.TWO; i.compareTo(number.add(BigInteger.ONE)) == -1; i.add(BigInteger.ONE)) {
+		for (BigInteger i = BigInteger.valueOf(2); i.compareTo(number.add(BigInteger.ONE)) == -1; i.add(BigInteger.ONE)) {
 			System.out.println("i is " +i);
 		//this is the same as for (i = 1; i + 1 < number; i++), but using BigInteger because these numbers may get very large
 			if (i.mod(number).equals(BigInteger.ZERO)) {
