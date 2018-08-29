@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 public class Methods {
 	
+	//RSA methods
+	
 	public static BigInteger encrypt(BigInteger message, BigInteger E, BigInteger N) {
 		return message.modPow(E, N);
 		//This is message ^ E % N
@@ -59,13 +61,13 @@ public class Methods {
 		while (!found) {
 			if (T.equals(L)) return BigInteger.valueOf(-1); //T must be less than L
 			Tfactors = findFactors(T);
-			System.out.println(Arrays.toString(Tfactors));
+			//System.out.println(Arrays.toString(Tfactors));
 			
 			for (int i = 0; i < Tfactors.length; i ++) {
 				
 				if (N.remainder(Tfactors[i]).equals(BigInteger.ZERO)) {
 					//this is if (N % i == 0)
-					System.out.println(N + " % " + Tfactors[i] + " equals zero");
+					//System.out.println(N + " % " + Tfactors[i] + " equals zero");
 					testFailed = true;
 					break;
 				}
@@ -75,7 +77,7 @@ public class Methods {
 				for (int i = 0; i < Tfactors.length; i ++) {
 					//the same for loop as before; to iterate through the array of factors
 					if (L.remainder(Tfactors[i]).equals(BigInteger.ZERO)) {
-						System.out.println(L + " % " + Tfactors[i] + " equals zero");
+						//System.out.println(L + " % " + Tfactors[i] + " equals zero");
 						testFailed = true;
 						break;
 					}			
@@ -83,11 +85,11 @@ public class Methods {
 			}
 			
 			if (!testFailed) {
-				System.out.println("test passed for " + T);
+				//System.out.println("test passed for " + T);
 				break;
 			}
 			T = T.add(BigInteger.ONE); 
-			System.out.println("T incremented to " +T);
+			//System.out.println("T incremented to " +T);
 			testFailed = false;
 			
 			
@@ -109,6 +111,37 @@ public class Methods {
 			}
 		}
 		return i;
+	}
+
+	
+	//Overloaded RSA methods that take integer inputs
+	
+	public static BigInteger encrypt(int message, int E, int N) {
+		return encrypt(BigInteger.valueOf(message), BigInteger.valueOf(E), BigInteger.valueOf(N));
+	}
+	
+	public static BigInteger decrypt(int emessage, int D, int N) {
+		return encrypt(BigInteger.valueOf(emessage), BigInteger.valueOf(D), BigInteger.valueOf(N));
+	}
+	
+	public static BigInteger findN(int p, int q) {
+		return BigInteger.valueOf(p)  .multiply( BigInteger.valueOf(q) );
+	}
+	
+	public static BigInteger findL (int p, int q) {
+		return BigInteger.valueOf(p-1)  .multiply( BigInteger.valueOf(q-1) );
+	}
+	
+	public static BigInteger[] findFactors (int number) {
+		return findFactors(BigInteger.valueOf(number));
+	}
+	
+	public static BigInteger findE (int L, int N) {
+		return findE (BigInteger.valueOf(L), BigInteger.valueOf(N));
+	}
+	
+	public static BigInteger findD(int E, int L ) {
+		return findD(BigInteger.valueOf(E), BigInteger.valueOf(L));
 	}
 }
 
