@@ -30,14 +30,14 @@ public class testing extends Applet {
 	
 	public void init() {
 	
-		//System.out.println((BigInteger.valueOf(14).remainder(BigInteger.valueOf(2))).equals(BigInteger.ZERO));
+		System.out.println("N is " + Methods.findN(17, 19) + ", and L is " + Methods.findL(17, 19));
 		
-		//System.out.println(Arrays.toString(Methods.findFactors(BigInteger.valueOf(110880))));
+		System.out.println("The encryption key is " + Methods.findE(288, 323));
 		
-		System.out.println(Methods.findD(BigInteger.valueOf(5), BigInteger.valueOf(6)));
+		System.out.println("The message \"15\" is encrypted to " + Methods.encrypt(15, 5, 323));
 		
-		System.out.println(Methods.decrypt(BigInteger.valueOf(4), BigInteger.valueOf(5), BigInteger.valueOf(14)));
-		
-		//System.out.println(BigInteger.ONE.add(BigInteger.ONE));
+		System.out.println("The encrypted message \"2\" is decrypted to " + Methods.decrypt(BigInteger.valueOf(2), Methods.findD(5, 288), BigInteger.valueOf(323)));
+
+
 	}
 }
