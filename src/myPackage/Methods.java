@@ -99,12 +99,13 @@ public class Methods {
 /* The rule for finding D is D * E % L = 1
  * this method brute forces a solution for D, starting from 2
  */
-		boolean found = false; BigInteger i = BigInteger.ONE;
-		while (!found) {
-			i.add(BigInteger.ONE);
-			if (E.multiply(i).mod(L).equals(BigInteger.ONE)) {
-			//if (E * i % L == 1
-				found = true;
+		BigInteger i = BigInteger.valueOf(1);
+		
+		while (true) {
+			i = i.add(BigInteger.ONE);
+			if (i.multiply(E)  .remainder(L)   .equals(BigInteger.ONE)) {
+				//ie if (i * E % L == 1) (this is the rule for D)
+				break;
 			}
 		}
 		return i;

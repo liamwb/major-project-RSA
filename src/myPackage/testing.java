@@ -34,7 +34,9 @@ public class testing extends Applet {
 		
 		//System.out.println(Arrays.toString(Methods.findFactors(BigInteger.valueOf(110880))));
 		
-		System.out.println("returns " + Methods.findE(BigInteger.valueOf(6), BigInteger.valueOf(14)));
+		System.out.println(Methods.findD(BigInteger.valueOf(5), BigInteger.valueOf(6)));
+		
+		System.out.println(Methods.decrypt(BigInteger.valueOf(4), BigInteger.valueOf(5), BigInteger.valueOf(14)));
 		
 		//System.out.println(BigInteger.ONE.add(BigInteger.ONE));
 	}
