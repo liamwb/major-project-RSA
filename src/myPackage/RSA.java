@@ -16,11 +16,16 @@ import javax.swing.JTextField;
 public class RSA extends JFrame implements ActionListener {
 	public BigInteger E; public BigInteger N; private BigInteger D; 
 	//E is the encryption key, N is the modulus, D is the decyrption key
-	private BigInteger p; private BigInteger q;
+	private static BigInteger p; private static BigInteger q;
+	
+	public static String messageInput; public static String decryptedMessageOutput;
+	public static BigInteger message; public static BigInteger decryptedMessage;
+	//Since messages will need to get converted to some number for the encryption algorithm to function
 
 	
 	@SuppressWarnings("unused")
 	public static void addComponentsToPane(Container pane) {
+		
 		pane.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
@@ -102,28 +107,31 @@ public class RSA extends JFrame implements ActionListener {
 		pane.add(decrypt, c);
 		
 		//Textfield for decrypted message
-		JTextField decryptedField = new JTextField();
-		decryptedField.setEditable(false); //same deal as with the eMessageField
+		JTextField dMessageField = new JTextField();
+		dMessageField.setEditable(false); //same deal as with the eMessageField
 		c.gridx = 0; c.gridy = 8;
 		c.gridwidth = 6;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		pane.add(decryptedField, c);
+		pane.add(dMessageField, c);
 		
 		
-		//*************************
-		//ActionListeners start here
-		//************************
-					
+		/**************************
+		ActionListeners start here
+		***************************/
+			
+		/*
 			//Actionlistener for the p textfield
 			pField.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					p = new BigInteger(pField.getText());
+					//This is a constructor method for BigInteger which takes a string
 				}
 			});
 		
 			//Actionlistener for the q textfield
 			qField.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					
+					q = new BigInteger()
 				}
 			});			
 				
@@ -135,9 +143,32 @@ public class RSA extends JFrame implements ActionListener {
 				
 			});
 				
+				
+				*/
 			//Actionlistener for the decrypt button
 			decrypt.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+//Setting the values of the input variables
+					try {
+						p = new BigInteger(pField.getText());
+						q = new BigInteger(qField.getText());	
+						
+//resetting the colour and contents of dMessageField in case the catch block executed in the past
+						dMessageField.setForeground(null);
+						dMessageField.setText("");
+					}
+					
+					catch (NumberFormatException noText) {
+//This exception is thrown when BigInteger() tries to construct from an empty string, or a string with letter in it
+						dMessageField.setForeground(Color.RED);
+						dMessageField.setText("Valid inputs required for p and q");	
+						return; //if p and/or q aren't valid
+					}
+					
+					messageInput = messageField.getText();
+					
+					
 					
 				}
 			});
