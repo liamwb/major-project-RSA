@@ -1,6 +1,7 @@
 package myPackage;
 
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.lang.reflect.Array;
 import java.math.*;
 import java.util.ArrayList;
@@ -143,5 +144,52 @@ public class Methods {
 	public static BigInteger findD(int E, int L ) {
 		return findD(BigInteger.valueOf(E), BigInteger.valueOf(L));
 	}
+
+
+
+//method to convert strings into numbers and numbers into strings (based on char values)
+
+
+	public static BigInteger encode (String s) {
+		byte[] byteArray = s.getBytes(Charset.forName("ASCII"));
+		String concatable = "1";
+//the string starts with a 1 so that java doesn't cut off any of the leading zeros that get put there automatically
+		
+		for (int i = 0; i < byteArray.length; i++) {
+			String candidate =  "" + byteArray[i];
+			//need to enforce that each char ends up at three numerals, so that it can be decoded
+			switch (candidate.length()) 
+			{
+			case 1: candidate = "00" + candidate;
+				
+			case 2: candidate = "0" + candidate;
+			}
+			concatable += candidate;	
+		}
+		
+		BigInteger output = new BigInteger(concatable);
+		return output;
+	}
+	
+	public static String decode(BigInteger number) {
+		String numberString = number.toString();
+		numberString = numberString.substring(1);
+		String output = "";
+		//This substring will remove the '1' that was added to the start of number by the encode method
+		for (int i = 0; i < numberString.length(); i += 3) {
+	//each three digits translate to a single ASCII character
+			output += (char) Integer.parseInt(     numberString.substring(i, i+3)      );
+/*There are a few things going on here:
+ * numberString.substring(i, i+3) is going to return a chunk of three numerals     
+ * Those numerals are going to be converted to an integer
+ * And that integer is going to be cast to a char, which will automatically convert the integer representation
+ * to a char, which can then be concatenated to the output
+ */
+		}
+		return output;
+	}
+	
+
+
 }
 

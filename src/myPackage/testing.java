@@ -30,6 +30,13 @@ public class testing extends Applet {
 	
 	public void init() {
 	
+		
+		System.out.println(Methods.encode("Oh my god it works!"));
+		
+		
+		System.out.println(Methods.decode(Methods.encode("Oh my god it works!")));
+		
+		/*
 		System.out.println("N is " + Methods.findN(15485867, 32452843) + ", and L is " + Methods.findL(15485867, 32452843));
 		
 		System.out.println("The encryption key is " + Methods.findE(BigInteger.valueOf((long) 502560362531172.0), BigInteger.valueOf((long)502560410469881.0)));
@@ -37,7 +44,7 @@ public class testing extends Applet {
 		System.out.println("The message \"5000\" is encrypted to " + Methods.encrypt(BigInteger.valueOf(5000), BigInteger.valueOf(5), BigInteger.valueOf((long)502560410469881.0)));
 		
 		System.out.println("The encrypted message \"5000\" is decrypted to " + Methods.decrypt(BigInteger.valueOf((long) 79367698279942.0), Methods.findD(BigInteger.valueOf(5), BigInteger.valueOf((long) 502560362531172.0)), BigInteger.valueOf(323)));
-
+8*/
 
 	}
 }
