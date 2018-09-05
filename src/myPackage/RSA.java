@@ -26,7 +26,10 @@ public class RSA extends JFrame implements ActionListener {
 		
 		//Title
 		JLabel title = new JLabel("RSA");
-		c.gridx = 0; c.gridy = 0;
+		title.setFont(new Font("Serif", Font.PLAIN, 18));
+		c.gridx = 3; c.gridy = 0;
+		c.gridwidth = 6;
+		c.anchor = GridBagConstraints.NORTH;
 		pane.add(title);
 		
 		//other elements should lock to the right
@@ -35,6 +38,7 @@ public class RSA extends JFrame implements ActionListener {
 		//Label for the first prime
 		JLabel pLabel = new JLabel("P: ");
 		c.gridx = 0; c.gridy = 1;
+		c.gridwidth = 1;
 		pane.add(pLabel, c);
 		
 		//Label for the second prime
@@ -50,12 +54,6 @@ public class RSA extends JFrame implements ActionListener {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(pField, c);
 		
-		//Actionlistener for the p textfield
-		pField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		
 		//Textfield for q
 		JTextField qField = new JTextField(2);
 		c.gridx = 4; c.gridy = 1;
@@ -63,13 +61,6 @@ public class RSA extends JFrame implements ActionListener {
 		c.gridwidth = 2;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(qField, c);
-		
-		//Actionlistener for the q textfield
-		qField.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
 		
 		//Label for message instructions
 		JLabel messageLabel = new JLabel("Put the message to be encrypted below");
@@ -87,13 +78,6 @@ public class RSA extends JFrame implements ActionListener {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(messageField, c);
 		
-		messageField.addActionListener(new ActionListener() {
-			public void actionPerformed (ActionEvent e) {
-				
-			}
-			
-		});
-		
 		//Label for the encrypted method
 		JLabel eMessageLabel = new JLabel("Encrypted Message:");
 		c.gridx = 0; c.gridy = 5;
@@ -103,23 +87,62 @@ public class RSA extends JFrame implements ActionListener {
 		pane.add(eMessageLabel, c);
 		
 		//TextField for eMessage
-		JTextField eMessageField = new JTextField(6);
+		JTextField eMessageField = new JTextField();
+		eMessageField.setEditable(false); //The user should not be able to edit the contents of this textfield
 		c.gridx = 0; c.gridy = 6;
 		c.gridwidth = 6;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(eMessageField, c);
 		
 		//Decrypt button
 		JButton decrypt = new JButton("Decrypt");
 		c.gridx = 0; c.gridy = 7;
 		c.gridwidth = 1;
+		c.fill = GridBagConstraints.NONE;
 		pane.add(decrypt, c);
 		
-		//Decrypt textfield
-		JTextField decryptField = new JTextField();
+		//Textfield for decrypted message
+		JTextField decryptedField = new JTextField();
+		decryptedField.setEditable(false); //same deal as with the eMessageField
 		c.gridx = 0; c.gridy = 8;
 		c.gridwidth = 6;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		pane.add(decryptField, c);
+		pane.add(decryptedField, c);
+		
+		
+		//*************************
+		//ActionListeners start here
+		//************************
+					
+			//Actionlistener for the p textfield
+			pField.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+		
+			//Actionlistener for the q textfield
+			qField.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});			
+				
+			//Actionlistener for the message textfield
+			messageField.addActionListener(new ActionListener() {
+				public void actionPerformed (ActionEvent e) {
+					
+				}
+				
+			});
+				
+			//Actionlistener for the decrypt button
+			decrypt.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+				}
+			});
+				
+				
 		}
 
 	
