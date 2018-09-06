@@ -9,17 +9,16 @@ import java.math.BigInteger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
 public class RSA extends JFrame implements ActionListener {
-	public BigInteger E; public BigInteger N; private BigInteger D; 
+	public static BigInteger E; public static BigInteger N; private static BigInteger D; 
 	//E is the encryption key, N is the modulus, D is the decyrption key
 	private static BigInteger p; private static BigInteger q;
 	
-	public static String messageInput; public static String decryptedMessageOutput;
-	public static BigInteger message; public static BigInteger decryptedMessage;
+	public static String messageInput; public static String decryptedMessageOutput; 
+	public static BigInteger message; public static BigInteger encryptedMessage; public static BigInteger decryptedMessage;
 	//Since messages will need to get converted to some number for the encryption algorithm to function
 
 	
@@ -167,9 +166,30 @@ public class RSA extends JFrame implements ActionListener {
 					}
 					
 					messageInput = messageField.getText();
+					message = Methods.encode(messageInput);
+					//messageInput is a string, read from the messageField
+					//message is an integer representation of the string messageInput
 					
+					N = Methods.findN(p, q);
+					E = Methods.findE(Methods.findL(p, q), N);
+					D = Methods.findD(E, Methods.findL(p, q));
 					
+					//N and E are public information, but I would guess that in a "proper" implementation of RSA, the value of 
+					//D would not be stored in memory.
 					
+					System.out.println("N: " + N + ", E: " + E + ", D: " + D);
+					
+					encryptedMessage = Methods.encrypt(message, E, N);
+					//The integer is encrypted, not the string
+					System.out.println("Encrypted message is (integer) " + encryptedMessage);
+					eMessageField.setText("" + encryptedMessage);
+					
+					decryptedMessage = Methods.decrypt(encryptedMessage, D, N);
+					//The encrypted integer is decrypted to return the original integer
+					decryptedMessageOutput = Methods.decode(decryptedMessage);
+					//that integer can then be converted back into a string value
+					
+					dMessageField.setText(decryptedMessageOutput);
 				}
 			});
 				
