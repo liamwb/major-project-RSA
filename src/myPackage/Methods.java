@@ -99,9 +99,46 @@ public class Methods {
 	}
 	
 	public static BigInteger findD(BigInteger E, BigInteger L) {
-/* The rule for finding D is D * E % L = 1
+	/*A good explanation of this method can be found here:
+	 * https://stackoverflow.com/questions/23279208/rsa-calculate-d
+	 * 
+	 * The decryption key, D, must follow the rule d*e = 1 mod(L)
+	 * or (d*e) mod L = 1. (I assume these statements are mathematically equivalent)
+	 * 
+	 * So from d*e = 1 modL
+	 * d*e = 1 + k*L, k is a natural number
+	 * 
+	 * So d = (1 + k*L)/e, and d must be an integer.
+	 * 
+	 * So this method will loop through k until it finds an integer solution for d
+	 */
+		BigInteger k = BigInteger.ONE;
+		while (true) {
+			
+			if (    (BigInteger.ONE.add(   k.multiply(L)    )    ).      remainder(E).     equals(BigInteger.ZERO)) {
+			//if ((1 + k*L) / E == 0
+			//ie if the above is an integer
+				return (BigInteger.ONE.add(   k.multiply(L)    )    ).divide(E);
+				//return (1 + k*L) / E
+			}
+			
+			
+			k = k.add(BigInteger.ONE);
+			
+			
+		}
+		
+	}
+	
+	
+	
+	
+	
+	/*old findD method that just brute forced out a solution from every single natural number.
+	public static BigInteger findD(BigInteger E, BigInteger L) {
+ * The rule for finding D is D * E % L = 1
  * this method brute forces a solution for D, starting from 2
- */
+ *
 		BigInteger i = BigInteger.valueOf(1);
 		
 		while (true) {
@@ -113,7 +150,7 @@ public class Methods {
 		}
 		return i;
 	}
-
+*/
 	
 	//Overloaded RSA methods that take integer inputs
 	
@@ -122,7 +159,7 @@ public class Methods {
 	}
 	
 	public static BigInteger decrypt(int emessage, int D, int N) {
-		return encrypt(BigInteger.valueOf(emessage), BigInteger.valueOf(D), BigInteger.valueOf(N));
+		return decrypt(BigInteger.valueOf(emessage), BigInteger.valueOf(D), BigInteger.valueOf(N));
 	}
 	
 	public static BigInteger findN(int p, int q) {

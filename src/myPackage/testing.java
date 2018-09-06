@@ -36,15 +36,16 @@ public class testing extends Applet {
 		
 		System.out.println(Methods.decode(Methods.encode("Oh my god it works!")));
 		
-		/*
-		System.out.println("N is " + Methods.findN(15485867, 32452843) + ", and L is " + Methods.findL(15485867, 32452843));
+		System.out.println("N is " + Methods.findN(23, 19) + " and L is " + Methods.findL(23, 19));
 		
-		System.out.println("The encryption key is " + Methods.findE(BigInteger.valueOf((long) 502560362531172.0), BigInteger.valueOf((long)502560410469881.0)));
+		System.out.println("E is " + Methods.findE(396, 437));
 		
-		System.out.println("The message \"5000\" is encrypted to " + Methods.encrypt(BigInteger.valueOf(5000), BigInteger.valueOf(5), BigInteger.valueOf((long)502560410469881.0)));
+		System.out.println("gets encrypted to " + Methods.encrypt(56, 5, 437));
 		
-		System.out.println("The encrypted message \"5000\" is decrypted to " + Methods.decrypt(BigInteger.valueOf((long) 79367698279942.0), Methods.findD(BigInteger.valueOf(5), BigInteger.valueOf((long) 502560362531172.0)), BigInteger.valueOf(323)));
-8*/
+		System.out.println("D is " + Methods.findD(BigInteger.valueOf(5), BigInteger.valueOf(396)));
+		
+		System.out.println("gets decrypted to " + Methods.decrypt(BigInteger.valueOf(341), Methods.findD(5, 396), BigInteger.valueOf(437)));
+
 
 	}
 }
