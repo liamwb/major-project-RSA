@@ -112,38 +112,87 @@ public class RSA extends JFrame implements ActionListener {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(dMessageField, c);
 		
+		/**************************
+		 * Hidden elements
+		 * All these elements start hidden
+		 **************************/
+		
+		//Button to show hidden elements
+		JButton showButton = new JButton("Show behind the scenes");
+		c.gridx = 3; c.gridy = 9;
+		c.gridwidth = 1;
+		c.fill = GridBagConstraints.NONE;
+		pane.add(showButton, c);
+		
+		//Labels for N, E, and D
+		JLabel NLabel = new JLabel("N (the modulus): ");
+		c.gridx = 0; c.gridy = 10;
+		c.gridwidth = 1;
+		NLabel.setVisible(false);
+		pane.add(NLabel, c);
+		
+		JLabel ELabel = new JLabel("E (the encryption key): ");
+		c.gridx = 0; c.gridy = 11;
+		c.gridwidth = 1;
+		ELabel.setVisible(false);
+		pane.add(ELabel, c);
+
+		JLabel DLabel = new JLabel("D (the decryption key): ");
+		c.gridx = 0; c.gridy = 12;
+		c.gridwidth = 1;
+		DLabel.setVisible(false);
+		pane.add(DLabel, c);
+		
+		//Textfields for N, E, and D
+		JTextField NField = new JTextField(5);
+		NField.setEditable(false);
+		c.gridx = 1; c.gridy = 10;
+		c.gridwidth = 5;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		NField.setVisible(false);
+		pane.add(NField, c);
+		
+		JTextField EField = new JTextField(5);
+		EField.setEditable(false);
+		c.gridx = 1; c.gridy = 11;
+		c.gridwidth = 5;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		EField.setVisible(false);
+		pane.add(EField, c);
+		
+		JTextField DField = new JTextField(5);
+		DField.setEditable(false);
+		c.gridx = 1; c.gridy = 12;
+		c.gridwidth = 5;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		DField.setVisible(false);
+		pane.add(DField, c);
+		
 		
 		/**************************
 		ActionListeners start here
 		***************************/
-			
-		/* ActionListeners that I realised that I didn't need
-			//Actionlistener for the p textfield
-			pField.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					p = new BigInteger(pField.getText());
-					//This is a constructor method for BigInteger which takes a string
-				}
-			});
+
+			//ActionListener for the Behind the Scenes Button (showButton)
 		
-			//Actionlistener for the q textfield
-			qField.addActionListener(new ActionListener() {
+			showButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					q = new BigInteger()
-				}
-			});			
-				
-			//Actionlistener for the message textfield
-			messageField.addActionListener(new ActionListener() {
-				public void actionPerformed (ActionEvent e) {
+					
+					NLabel.setVisible(!NLabel.isVisible());;
+					ELabel.setVisible(!ELabel.isVisible());;
+					DLabel.setVisible(!DLabel.isVisible());;
+					NField.setVisible(!NField.isVisible());;
+					EField.setVisible(!EField.isVisible());;
+					DField.setVisible(!DField.isVisible());;
+					
+					//Toggling the visibility of the "behind the scenes" stuff whenever the button is pressed
 					
 				}
-				
 			});
-				
-				
-				*/
-			//Actionlistener for the decrypt button
+			
+			
+		
+			//Actionlistener for the Do the Thing! button
 			decrypt.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -170,6 +219,7 @@ public class RSA extends JFrame implements ActionListener {
 					//message is an integer representation of the string messageInput
 					
 					N = Methods.findN(p, q);
+					NField.setText("" + N);
 					
 					System.out.println("message" + message+" N " + N);
 					
@@ -183,10 +233,14 @@ public class RSA extends JFrame implements ActionListener {
 					E = Methods.findE(Methods.findL(p, q), N);
 					D = Methods.findD(E, Methods.findL(p, q));
 					
+					EField.setText("" + E);
+					DField.setText("" + D);
 					
-					
-					//N and E are public information, but I would guess that in a "proper" implementation of RSA, the value of 
-					//D would not be stored in memory.
+					/*N and E are public information, but I would guess that in a "proper" implementation of RSA, the value of 
+					 *D would not be stored in memory. However, I am doing it because the point of this is not to be properly 
+					 *secure, but to explore/explain how RSA works. Given that D is being displayed in a textfield, it doesn't seem like
+					 *a huge deal if it is also stored in memory.
+					*/
 					
 					encryptedMessage = Methods.encrypt(message, E, N);
 					//The integer is encrypted, not the string
@@ -200,9 +254,7 @@ public class RSA extends JFrame implements ActionListener {
 					
 					dMessageField.setText(decryptedMessageOutput);
 				}
-			});
-				
-				
+			});		
 		}
 
 	
@@ -219,7 +271,7 @@ public class RSA extends JFrame implements ActionListener {
 		frame.setVisible(true);
 	}
 	
-	//From the oracle tutorial on GridBagLayout
+	//From the oracle tutorial on GridBagLayout.
 		public static void main(String[] args) {
 			javax.swing.SwingUtilities.invokeLater(new Runnable() {
 	            public void run() {
