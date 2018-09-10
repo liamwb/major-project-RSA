@@ -22,7 +22,6 @@ public class RSA extends JFrame implements ActionListener {
 	//Since messages will need to get converted to some number for the encryption algorithm to function
 
 	
-	@SuppressWarnings("unused")
 	public static void addComponentsToPane(Container pane) {
 		
 		pane.setLayout(new GridBagLayout());
@@ -99,7 +98,7 @@ public class RSA extends JFrame implements ActionListener {
 		pane.add(eMessageField, c);
 		
 		//Decrypt button
-		JButton decrypt = new JButton("Decrypt");
+		JButton decrypt = new JButton("Do the thing!");
 		c.gridx = 0; c.gridy = 7;
 		c.gridwidth = 1;
 		c.fill = GridBagConstraints.NONE;
@@ -118,7 +117,7 @@ public class RSA extends JFrame implements ActionListener {
 		ActionListeners start here
 		***************************/
 			
-		/*
+		/* ActionListeners that I realised that I didn't need
 			//Actionlistener for the p textfield
 			pField.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -171,17 +170,27 @@ public class RSA extends JFrame implements ActionListener {
 					//message is an integer representation of the string messageInput
 					
 					N = Methods.findN(p, q);
+					
+					System.out.println("message" + message+" N " + N);
+					
+					//RSA will only encrypt messages smaller than N, so this checks to make sure m is valid given N
+					if (message.compareTo(N) > 0) {
+						dMessageField.setForeground(Color.RED);
+						dMessageField.setText("Message is to large to for N = " + N);
+						return;
+					}
+					
 					E = Methods.findE(Methods.findL(p, q), N);
 					D = Methods.findD(E, Methods.findL(p, q));
+					
+					
 					
 					//N and E are public information, but I would guess that in a "proper" implementation of RSA, the value of 
 					//D would not be stored in memory.
 					
-					System.out.println("N: " + N + ", E: " + E + ", D: " + D);
-					
 					encryptedMessage = Methods.encrypt(message, E, N);
 					//The integer is encrypted, not the string
-					System.out.println("Encrypted message is (integer) " + encryptedMessage);
+					System.out.println("Encrypted message is (integer) " + (encryptedMessage));
 					eMessageField.setText("" + encryptedMessage);
 					
 					decryptedMessage = Methods.decrypt(encryptedMessage, D, N);
