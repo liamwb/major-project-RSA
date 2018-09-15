@@ -9,6 +9,7 @@ import java.math.BigInteger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 @SuppressWarnings("serial")
@@ -30,10 +31,16 @@ public class RSA extends JFrame implements ActionListener {
 		//Title
 		JLabel title = new JLabel("RSA");
 		title.setFont(new Font("Serif", Font.PLAIN, 18));
-		c.gridx = 3; c.gridy = 0;
-		c.gridwidth = 6;
+		c.gridx = 0; c.gridy = 0;
+		c.gridwidth = 1;
 		c.anchor = GridBagConstraints.NORTH;
 		pane.add(title);
+		
+		//Label to explain how to input Mersenne primes
+		JLabel mersenne = new JLabel("To input a Mersenne prime: type \"2, [exponent]\"");
+		c.gridx = 3; c.gridy = 0;
+		c.gridwidth = 1;
+		pane.add(mersenne, c);
 		
 		//other elements should lock to the right
 		c.anchor = GridBagConstraints.WEST;
@@ -41,17 +48,18 @@ public class RSA extends JFrame implements ActionListener {
 		//Label for the first prime
 		JLabel pLabel = new JLabel("P: ");
 		c.gridx = 0; c.gridy = 1;
-		c.gridwidth = 1;
+		c.weightx = 0.1;
 		pane.add(pLabel, c);
 		
 		//Label for the second prime
 		JLabel qLabel = new JLabel("Q: ");
 		c.gridx = 3; c.gridy = 1;
+		c.weightx = 0.1;
 		pane.add(qLabel, c);
 		
 		//Textfield for p
 		JTextField pField = new JTextField(2);
-		c.gridx = 1; c.gridy = 1;
+		c.gridx = 0; c.gridy = 1;
 		c.weightx = 0.4;
 		c.gridwidth = 2;
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -59,7 +67,7 @@ public class RSA extends JFrame implements ActionListener {
 		
 		//Textfield for q
 		JTextField qField = new JTextField(2);
-		c.gridx = 4; c.gridy = 1;
+		c.gridx = 3; c.gridy = 1;
 		c.weightx = 0.4;
 		c.gridwidth = 2;
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -168,6 +176,22 @@ public class RSA extends JFrame implements ActionListener {
 		DField.setVisible(false);
 		pane.add(DField, c);
 		
+	
+		//A label to explain how RSA works, and what the numbers mean
+		JTextArea explanationLabel = new JTextArea();
+		explanationLabel.setText
+		(
+		"RSA is a \"trapdoor function\". This means that, with only the \"public\" information \n"
+		+ "(N and E), it is very easy to compute in one direction (to encrypt things with). However, \n"
+		+ "with only that information and an encrypted message, it is very difficult to decrypt. \n"
+		+ "The special feature of a trapdoor function is that, with another, secret, piece of information, \n"
+		+ "the message becomes very easy to decrypt. "		
+		);
+		c.gridx = 0; c.gridy = 13;
+		c.gridwidth = 6; c.gridheight = 4;
+		explanationLabel.setVisible(false);
+		pane.add(explanationLabel, c);
+		
 		
 		/**************************
 		ActionListeners start here
@@ -178,23 +202,103 @@ public class RSA extends JFrame implements ActionListener {
 			showButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
-					NLabel.setVisible(!NLabel.isVisible());;
-					ELabel.setVisible(!ELabel.isVisible());;
-					DLabel.setVisible(!DLabel.isVisible());;
-					NField.setVisible(!NField.isVisible());;
-					EField.setVisible(!EField.isVisible());;
-					DField.setVisible(!DField.isVisible());;
+					NLabel.setVisible(!NLabel.isVisible());
+					ELabel.setVisible(!ELabel.isVisible());
+					DLabel.setVisible(!DLabel.isVisible());
+					NField.setVisible(!NField.isVisible());
+					EField.setVisible(!EField.isVisible());
+					DField.setVisible(!DField.isVisible());
+					explanationLabel.setVisible(!explanationLabel.isVisible());
 					
 					//Toggling the visibility of the "behind the scenes" stuff whenever the button is pressed
 					
 				}
 			});
-			
-			
 		
 			//Actionlistener for the Do the Thing! button
 			decrypt.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					
+					Boolean pMersenne; Boolean qMersenne;
+					//variables to store whether or not the inputs for p and q might be Mersenne primes
+					if (pField.getText().indexOf(',') != -1) {pMersenne = true; System.out.println("Found a comma");}
+					else pMersenne = false;
+					
+					
+					if (qField.getText().indexOf(',') != -1) {qMersenne = true; System.out.println("Found a comma");}
+					else qMersenne = false;
+					
+					//If there isn't a comma in the textfield, then it can't be a Mersenne prime
+					
+					try {
+						if (pMersenne == true) {
+							BigInteger pBase = new BigInteger(pField.getText().substring(0, pField.getText().indexOf(',')));
+							int pExponent = Integer.parseInt(pField.getText().substring(pField.getText().indexOf(',') +1).trim());
+						//pBase is all the characters before the comma, and pExponent is all the characters after (not including the comma)	
+							p = (pBase.pow(pExponent)).subtract(BigInteger.ONE);
+						//Mersenne primes come in the formula a^b - 1, which is the operation which is being performed here
+						}
+						
+						else {
+							p = new BigInteger(pField.getText());
+						}
+						
+						if (qMersenne) {
+							BigInteger qBase = new BigInteger(qField.getText().substring(0, qField.getText().indexOf(',')));
+							int qExponent = Integer.parseInt(qField.getText().substring(qField.getText().indexOf(',') +1).trim());
+						//qBase is all the characters before the comma, and qExponent is all the characters after (not including the comma)
+							q = (qBase.pow(qExponent)).subtract(BigInteger.ONE);
+						}
+						
+						else {
+							q = new BigInteger(qField.getText());
+						}
+						
+						//resetting the colour and contents of dMessageField in case the catch block executed in the past
+						dMessageField.setForeground(null);
+						dMessageField.setText("");
+					}
+					
+					catch (NumberFormatException n) {
+						dMessageField.setForeground(Color.RED);
+						dMessageField.setText("Valid inputs required for p and q");	
+						return; //if p and/or q aren't valid
+					}
+					
+					
+				/*	
+					if (pField.getText().indexOf(',') != -1) {
+			//.indexOf returns -1 if the char is not present in the string. So if there is a comma, the contents of this if statement will run	
+						try {
+							BigInteger pBase = new BigInteger(pField.getText().substring(0, pField.getText().indexOf(',')));
+							BigInteger pExponent = new BigInteger(pField.getText().substring(pField.getText().indexOf(',') +1));
+						//pBase is all the characters before the comma, and pExponent is all the characters after (not including the comma)
+						}
+						
+						catch (NumberFormatException n) {
+							//if, for example, there are two commas in one of the inputs
+							dMessageField.setForeground(Color.RED);
+							dMessageField.setText("Valid inputs required for p and q");	
+							return; //if p and/or q aren't valid
+						}
+					}
+					
+					if (qField.getText().indexOf(',') != -1) {
+					
+						try {
+							BigInteger qBase = new BigInteger(qField.getText().substring(0, qField.getText().indexOf(',')));
+							BigInteger qExponent = new BigInteger(qField.getText().substring(qField.getText().indexOf(',') +1));
+						//qBase is all the characters before the comma, and qExponent is all the characters after (not including the comma)
+						}
+						
+						catch (NumberFormatException n) {
+							//if, for example, there are two commas in one of the inputs
+							dMessageField.setForeground(Color.RED);
+							dMessageField.setText("Valid inputs required for p and q");	
+							return; //if p and/or q aren't valid
+						}
+						
+					}
 					
 //Setting the values of the input variables
 					try {
@@ -206,12 +310,14 @@ public class RSA extends JFrame implements ActionListener {
 						dMessageField.setText("");
 					}
 					
-					catch (NumberFormatException noText) {
+					catch (NumberFormatException n) {
 //This exception is thrown when BigInteger() tries to construct from an empty string, or a string with letter in it
 						dMessageField.setForeground(Color.RED);
 						dMessageField.setText("Valid inputs required for p and q");	
 						return; //if p and/or q aren't valid
 					}
+					
+					*/
 					
 					messageInput = messageField.getText();
 					message = Methods.encode(messageInput);
@@ -226,7 +332,7 @@ public class RSA extends JFrame implements ActionListener {
 					//RSA will only encrypt messages smaller than N, so this checks to make sure m is valid given N
 					if (message.compareTo(N) > 0) {
 						dMessageField.setForeground(Color.RED);
-						dMessageField.setText("Message is to large to for N = " + N);
+						dMessageField.setText("Message is to large to for current N");
 						return;
 					}
 					
@@ -247,12 +353,21 @@ public class RSA extends JFrame implements ActionListener {
 					System.out.println("Encrypted message is (integer) " + (encryptedMessage));
 					eMessageField.setText("" + encryptedMessage);
 					
+					
+					try {
+		//trying to decrypt something that came from non-prime p & q sometimes throws an exception when decoding
 					decryptedMessage = Methods.decrypt(encryptedMessage, D, N);
 					//The encrypted integer is decrypted to return the original integer
 					decryptedMessageOutput = Methods.decode(decryptedMessage);
 					//that integer can then be converted back into a string value
 					
 					dMessageField.setText(decryptedMessageOutput);
+					}
+					catch (StringIndexOutOfBoundsException n){
+						dMessageField.setForeground(Color.RED);
+						dMessageField.setText("P and/or q not prime");	
+						return;
+					}
 				}
 			});		
 		}
@@ -286,6 +401,9 @@ public class RSA extends JFrame implements ActionListener {
 			// TODO Auto-generated method stub
 			
 		}
+
+
+		
 
 
 }
