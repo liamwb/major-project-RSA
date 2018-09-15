@@ -185,10 +185,12 @@ public class RSA extends JFrame implements ActionListener {
 		+ "(N and E), it is very easy to compute in one direction (to encrypt things with). However, \n"
 		+ "with only that information and an encrypted message, it is very difficult to decrypt. \n"
 		+ "The special feature of a trapdoor function is that, with another, secret, piece of information, \n"
-		+ "the message becomes very easy to decrypt. "		
+		+ "the message becomes very easy to decrypt. Here, N is the product of p and q, E is the encryption \n"
+		+ "key, which is determined by being coprime with N, and (p-1)(q-1), and D is the decryption key, which is \n"
+		+ "determined by the rule: D*E mod (p-1)(q-1)."
 		);
 		c.gridx = 0; c.gridy = 13;
-		c.gridwidth = 6; c.gridheight = 4;
+		c.gridwidth = 6; c.gridheight = 6;
 		explanationLabel.setVisible(false);
 		pane.add(explanationLabel, c);
 		
