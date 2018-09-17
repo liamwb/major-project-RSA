@@ -48,19 +48,19 @@ public class RSA extends JFrame implements ActionListener {
 		//Label for the first prime
 		JLabel pLabel = new JLabel("P: ");
 		c.gridx = 0; c.gridy = 1;
-		c.weightx = 0.1;
+		c.weightx = 0.2;
 		pane.add(pLabel, c);
 		
 		//Label for the second prime
 		JLabel qLabel = new JLabel("Q: ");
 		c.gridx = 3; c.gridy = 1;
-		c.weightx = 0.1;
+		c.weightx = 0.2;
 		pane.add(qLabel, c);
 		
 		//Textfield for p
 		JTextField pField = new JTextField(2);
 		c.gridx = 0; c.gridy = 1;
-		c.weightx = 0.4;
+		c.weightx = 0.3;
 		c.gridwidth = 2;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(pField, c);
@@ -68,7 +68,7 @@ public class RSA extends JFrame implements ActionListener {
 		//Textfield for q
 		JTextField qField = new JTextField(2);
 		c.gridx = 3; c.gridy = 1;
-		c.weightx = 0.4;
+		c.weightx = 0.3;
 		c.gridwidth = 2;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		pane.add(qField, c);
@@ -398,10 +398,9 @@ public class RSA extends JFrame implements ActionListener {
 		}
 
 
-		@Override
+		//Eclipse wants this to be here, even though ActionListener is also implemented elsewhere
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			
 		}
 
 
