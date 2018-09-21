@@ -403,8 +403,4 @@ public class RSA extends JFrame implements ActionListener {
 			// TODO Auto-generated method stub
 		}
 
-
-		
-
-
 }

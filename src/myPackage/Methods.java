@@ -36,10 +36,12 @@ public class Methods {
 		for (BigInteger i = BigInteger.valueOf(2); i.subtract(BigInteger.ONE).compareTo(number) == -1; i = i.add(BigInteger.ONE)) {
 			//this is the same as for (i = 2; i + 1 < number; i++), but using BigInteger because these numbers may get very large
 				if (number.remainder(i).equals(BigInteger.valueOf(0))) {
+					//if the number is a factor
 					factors.add(i);
 					i.add(BigInteger.ONE);
 				}
 			}
+		
 		//putting the factors into an array. Arrays are faster than lists.
 		BigInteger[] array = new BigInteger[factors.size()];
 		for (int i = 0; i < factors.size(); i++) {
@@ -73,6 +75,7 @@ public class Methods {
 					break;
 				}
 			}
+			
 			if (!testFailed) {
 				//if there are no common factors with N
 				for (int i = 0; i < Tfactors.length; i ++) {
@@ -148,11 +151,7 @@ public class Methods {
 	}
 */
 	
-	
-
-
-//method to convert strings into numbers and numbers into strings (based on char values)
-
+	//method to convert strings into numbers and numbers into strings (based on char values)
 
 	public static BigInteger encode (String s) {
 		byte[] byteArray = s.getBytes(Charset.forName("ASCII"));
