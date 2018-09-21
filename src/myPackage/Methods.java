@@ -130,10 +130,6 @@ public class Methods {
 		
 	}
 	
-	
-	
-	
-	
 	/*old findD method that just brute forced out a solution from every single natural number.
 	public static BigInteger findD(BigInteger E, BigInteger L) {
  * The rule for finding D is D * E % L = 1
@@ -152,36 +148,7 @@ public class Methods {
 	}
 */
 	
-	//Overloaded RSA methods that take integer inputs
 	
-	public static BigInteger encrypt(int message, int E, int N) {
-		return encrypt(BigInteger.valueOf(message), BigInteger.valueOf(E), BigInteger.valueOf(N));
-	}
-	
-	public static BigInteger decrypt(int emessage, int D, int N) {
-		return decrypt(BigInteger.valueOf(emessage), BigInteger.valueOf(D), BigInteger.valueOf(N));
-	}
-	
-	public static BigInteger findN(int p, int q) {
-		return BigInteger.valueOf(p)  .multiply( BigInteger.valueOf(q) );
-	}
-	
-	public static BigInteger findL (int p, int q) {
-		return BigInteger.valueOf(p-1)  .multiply( BigInteger.valueOf(q-1) );
-	}
-	
-	public static BigInteger[] findFactors (int number) {
-		return findFactors(BigInteger.valueOf(number));
-	}
-	
-	public static BigInteger findE (int L, int N) {
-		return findE (BigInteger.valueOf(L), BigInteger.valueOf(N));
-	}
-	
-	public static BigInteger findD(int E, int L ) {
-		return findD(BigInteger.valueOf(E), BigInteger.valueOf(L));
-	}
-
 
 
 //method to convert strings into numbers and numbers into strings (based on char values)
@@ -225,7 +192,5 @@ public class Methods {
 		}
 		return output;
 	}
-	
-
 }
 
