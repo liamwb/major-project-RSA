@@ -223,11 +223,11 @@ public class RSA extends JFrame implements ActionListener {
 					
 					Boolean pMersenne; Boolean qMersenne;
 					//variables to store whether or not the inputs for p and q might be Mersenne primes
-					if (pField.getText().indexOf(',') != -1) {pMersenne = true; System.out.println("Found a comma");}
+					if (pField.getText().indexOf(',') != -1) pMersenne = true; 
 					else pMersenne = false;
 					
 					
-					if (qField.getText().indexOf(',') != -1) {qMersenne = true; System.out.println("Found a comma");}
+					if (qField.getText().indexOf(',') != -1) qMersenne = true; 
 					else qMersenne = false;
 					
 					//If there isn't a comma in the textfield, then it can't be a Mersenne prime
@@ -329,8 +329,6 @@ public class RSA extends JFrame implements ActionListener {
 					N = Methods.findN(p, q);
 					NField.setText("" + N);
 					
-					System.out.println("message" + message+" N " + N);
-					
 					//RSA will only encrypt messages smaller than N, so this checks to make sure m is valid given N
 					if (message.compareTo(N) > 0) {
 						dMessageField.setForeground(Color.RED);
@@ -352,7 +350,6 @@ public class RSA extends JFrame implements ActionListener {
 					
 					encryptedMessage = Methods.encrypt(message, E, N);
 					//The integer is encrypted, not the string
-					System.out.println("Encrypted message is (integer) " + (encryptedMessage));
 					eMessageField.setText("" + encryptedMessage);
 					
 					
