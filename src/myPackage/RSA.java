@@ -1,3 +1,19 @@
+/*RSA
+ * 
+ * Author: Liam Wood-Baker
+ * 
+ * Date: September 2018
+ * 
+ * Course: Computer Science 315
+ * 
+ * An implementation of RSA encryption, which displays
+ * relevant information to the user.
+ * 
+ * This implementation of RSA is NOT secure. Do not
+ * use it to actually encrypt anything.
+ */
+
+
 package myPackage;
 
 import java.awt.*;
